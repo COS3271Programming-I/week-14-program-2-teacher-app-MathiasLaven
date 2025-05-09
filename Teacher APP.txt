@@ -1,0 +1,473 @@
+package my_project;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+class Person {
+	private String firstName;
+	private String lastName;
+	private String gender;
+	private int age;
+	private double weight;
+	private int[] height;
+	private String ethnicGroup;
+	private String religion;
+	
+	public Person() {
+		this.firstName = MyClass.promptString("What is your person's first name?");
+		this.lastName = MyClass.promptString("What is your person's last name?");
+		this.gender = MyClass.promptString("What is your person's gender?");
+		
+		this.age = MyClass.promptInt("What is your person's age?", false, false);
+		
+		this.weight = MyClass.promptDouble("What is your person's weight (in pounds)?", false, false);
+		
+		int[] inputHeight = MyClass.getHeight("What is your person's height (in feet/inches, formatted as X'Y\")?");
+		
+		while (true) {
+			if (inputHeight[0] < 1) {
+				System.out.println("Error: Height must be positive. Please enter a number that is greater than 0.");
+			} else if (inputHeight[1] > 12) {
+				System.out.println("Error: Inches must be less than 12.");
+			} else {
+				this.height = inputHeight;
+				break;
+			}
+
+			inputHeight = MyClass.getHeight("What is your person's height (in feet/inches, formatted as X'Y\")?");
+		}
+		
+		this.ethnicGroup = MyClass.promptString("What is your person's ethnic group?");
+		this.religion = MyClass.promptString("What is your person's religious affiliation?");
+	}
+	
+	public String getFirstName() {
+		return this.firstName;
+	}
+	
+	public String getLastName() {
+		return this.lastName;
+	}
+	
+	public String getGender() {
+		return this.gender;
+	}
+	
+	public int getAge() {
+		return this.age;
+	}
+	
+	public double getWeight() {
+		return this.weight;
+	}
+	
+	public int[] getHeight() {
+		return this.height;
+	}
+	
+	public String getEthnicGroup() {
+		return this.ethnicGroup;
+	}
+	
+	public String getReligion() {
+		return this.religion;
+	}
+	
+	public void displayInfo() {
+		int[] height = this.getHeight();
+		System.out.format("First name: %s\n", this.getFirstName());
+		System.out.format("Last name: %s\n", this.getLastName());
+		System.out.format("Gender: %s\n", this.getGender());
+		System.out.format("Age: %d\n", this.getAge());
+		System.out.format("Weight: %.2f\n", this.getWeight());
+		System.out.format("Height: %d'%d\"\n", height[0], height[1]);
+		System.out.format("Ethnic group: %s\n", this.getEthnicGroup());
+		System.out.format("Religion: %s\n", this.getReligion());
+	}
+	
+	public String getFullName() {
+		return this.getFirstName() + " " + this.getLastName();
+	}
+	
+	public void setReligion(String newReligion) {
+		this.religion = newReligion;
+	}
+
+	public void sayGreeting() {
+		String greeting;
+		String personGroup = this.getEthnicGroup().toLowerCase();
+		
+		if (personGroup.equals("english") || personGroup.equals("american") || personGroup.equals("white") || personGroup.equals("european")) {
+			greeting = "Greetings!";
+		} else if (personGroup.equals("black") || personGroup.equals("african") || personGroup.equals("african-american")) {
+			greeting = "Good morning!";
+		} else if (personGroup.equals("hispanic") || personGroup.equals("latino") || personGroup.equals("latina") || personGroup.equals("spanish")) {
+			greeting = "¡Hola!";
+		} else {
+			greeting = "Hello!";
+		}
+		
+		System.out.format("Your person says \"%s\"\n", greeting);
+	}
+	
+	public void sayPrayer() {
+		String prayer;
+		String personReligion = this.getReligion().toLowerCase();
+		
+		if (personReligion.equals("christian") || personReligion.equals("catholic") || personReligion.equals("protestant") || personReligion.equals("mormon")) {
+			prayer = "prays in Jesus's name";
+		} else if (personReligion.equals("muslim") || personReligion.equals("shia") || personReligion.equals("sunni")) {
+			prayer = "prays to Allah";
+		} else if (personReligion.equals("jew")) {
+			prayer = "prays to God";
+		} else if (personReligion.equals("hindu") || personReligion.equals("buddhist")) {
+			prayer = "chants a mantra";
+		} else if (personReligion.equals("atheist") || personReligion.equals("agnostic")) {
+			prayer = "says a quick, insincere prayer";
+		} else {
+			prayer = String.format("says a %s prayer", personReligion);
+		}
+		
+		System.out.format("Your person %s.\n", prayer);
+		
+	}
+	
+	public void takeNap() {
+		String quality;
+		int personAge = this.getAge();
+		
+		if (personAge < 5) {
+			quality = "a tumultuous";
+		} else if (personAge < 10) {
+			quality = "an enjoyable";
+		} else if (personAge < 20) {
+			quality = "a restful";
+		} else if (personAge < 50) {
+			quality = "a much-needed";
+		} else {
+			quality = "a good";
+		}
+		
+		System.out.format("Your person had %s nap.\n", quality);
+		
+	}
+	
+	public void eatFood() {
+		String food;
+		double personWeight = this.getWeight();
+		
+		if (personWeight < 50) {
+			food = "a small snack";
+		} else if (personWeight < 100) {
+			food = "a hearty meal";
+		} else if (personWeight < 200) {
+			food = "several burgers";
+		} else {
+			food = "a ton of fast food";
+		}
+		
+		System.out.format("Your person chose to eat %s.\n", food);
+	}
+}
+
+class Student extends Person {
+	String major;
+	String classRank;
+	String studentEmail;
+	
+	public Student() {
+		super();
+		
+		this.major = MyClass.promptString("What is your person's college major?");
+		String classRankInput = MyClass.promptString("What is your person's class rank?");
+		
+		//https://stackoverflow.com/questions/18044469/checking-if-string-x-equals-any-of-the-strings-from-string
+		List<String> classRankOptions = Arrays.asList("freshman", "sophmore", "junior", "senior");
+		while (!classRankOptions.contains(classRankInput.toLowerCase())) {
+			System.out.println("That is not a valid class rank. Valid class ranks are one of: " + classRankOptions.toString());
+			
+			classRankInput = MyClass.promptString("What is your person's class rank?");
+		}
+		this.classRank = classRankInput;
+		
+		this.studentEmail = MyClass.promptString("What is your person's student email?");
+		
+	}
+	
+	public String getMajor() {
+		return this.major;
+	}
+	
+	public String getClassRank() {
+		return this.classRank;
+	}
+	
+	public String getStudentEmail() {
+		return this.studentEmail;
+	}
+	
+	public void displayInfo() {
+		super.displayInfo();
+		
+		System.out.format("Major: %s\n", this.getMajor());
+		System.out.format("Class rank: %s\n", this.getClassRank());
+		System.out.format("Email: %s\n", this.getStudentEmail());
+	}
+	
+	public void goToClass() {
+		String topic;
+		String studentMajor = this.getMajor().toLowerCase();
+		
+		if (studentMajor.equals("business") || studentMajor.equals("marketing") || studentMajor.equals("accounting") || studentMajor.equals("finance") || studentMajor.equals("economics")) {
+			topic = "sales";
+		} else if (studentMajor.equals("nursing") || studentMajor.equals("psychology") || studentMajor.equals("biology")) {
+			topic = "the human brain";
+		} else if (studentMajor.equals("communications") || studentMajor.equals("english") || studentMajor.equals("education")) {
+			topic = "writing";
+		} else if (studentMajor.equals("criminal justice") || studentMajor.equals("political science")) {
+			topic = "law";
+		} else if (studentMajor.equals("computer science") || studentMajor.equals("information technology")) {
+			topic = "programming";
+		} else {
+			topic = "math";
+		}
+		
+		System.out.format("Your person attends a class on %s.\n", topic);
+		
+	}
+	
+	public void eatFood() {
+		String food;
+		double studentWeight = this.getWeight();
+		
+		if (studentWeight < 50) {
+			food = "a quick bowl of ramen";
+		} else if (studentWeight < 100) {
+			food = "a healthy salad";
+		} else if (studentWeight < 200) {
+			food = "some pizza";
+		} else {
+			food = "a few desserts";
+		}
+		
+		System.out.format("Your person chose to eat %s.\n", food);
+	}
+}
+
+class Teacher extends Person {
+	String subject;
+	
+	public Teacher() {
+		super();
+		
+		this.subject = MyClass.promptString("What is your teacher's subject of specialty?");
+	}
+	
+	public String getSubject() {
+		return this.subject;
+	}
+	
+	public void displayInfo() {
+		super.displayInfo();
+		
+		System.out.format("Subject: %s\n", this.getSubject());
+	}
+	
+	public void teachClass() {
+		String topic;
+		String studentMajor = this.getSubject().toLowerCase();
+		
+		if (studentMajor.equals("english") || studentMajor.equals("literature")) {
+			topic = "identifying the theme of a work";
+		} else if (studentMajor.equals("math") || studentMajor.equals("algebra") || studentMajor.equals("geometry")) {
+			topic = "the Pythagorean theorem";
+		} else if (studentMajor.equals("science") || studentMajor.equals("biology")) {
+			topic = "photosynthesis";
+		} else if (studentMajor.equals("history") || studentMajor.equals("us history") || studentMajor.equals("u.s. history")) {
+			topic = "the American Revolution";
+		} else {
+			topic = "reviewing for exams";
+		}
+		
+		System.out.format("Your person holds a class on %s.\n", topic);
+		
+	}
+	
+}
+
+class MyClass {
+	static Scanner userinput = new Scanner(System.in);
+	public static void main (String[] args){  
+		System.out.println("You will be able to create several persons and then see information about them.");
+		System.out.println("");
+		
+		List<Person> createdPeople = new ArrayList<Person>();
+		
+		//loop as user creates multiple people, will break when they choose to
+		while (true) {
+			String personType = promptString("Do you want your person to be a student, teacher, or neither? \nType [S] for student, [T] for teacher, or anything else for neither.");
+			personType = personType.toLowerCase();
+			
+			if (personType.equals("s")) {
+				System.out.println("You will create a student.");
+				System.out.println("");
+				
+				Student userStudent = new Student();
+				createdPeople.add(userStudent);
+				
+				System.out.println("");
+				userStudent.displayInfo();
+				System.out.println("");
+			} else if (personType.equals("t")) {
+				System.out.println("You will create a teacher.");
+				System.out.println("");
+				
+				Teacher userTeacher = new Teacher();
+				createdPeople.add(userTeacher);
+				
+				System.out.println("");
+				userTeacher.displayInfo();
+				System.out.println("");
+			} else {
+				System.out.println("You will create a regular person.");
+				System.out.println("");
+				
+				Person userPerson = new Person();
+				createdPeople.add(userPerson);
+				
+				System.out.println("");
+				userPerson.displayInfo();
+				System.out.println("");
+			}
+			
+			String userContinues = promptString("Do you want to create another person? [Y/N]");
+			userContinues = userContinues.toLowerCase();
+			
+			 if (userContinues.equals("n")) {
+				 break;
+			 }
+		}
+		
+		//program end
+		System.out.println("");
+		System.out.println("-----");
+		System.out.println("");
+		
+		System.out.println("Here is information about all of your created persons:");
+		System.out.println("");
+		
+		for (int i = 0; i < createdPeople.size(); i++) {
+			Person currentPerson = createdPeople.get(i);
+			String personName = currentPerson.getFullName();
+			int personAge = currentPerson.getAge();
+			String personType = "";
+			
+			if (currentPerson instanceof Student) {
+				personType = " (student)";
+			} else if (currentPerson instanceof Teacher) {
+				personType = " (teacher)";
+			}
+			
+			System.out.format("Person %d: %s, age %d%s\n", i+1, personName, personAge, personType);
+		}
+
+	}
+	public static int[] getHeight(String message) {
+		int[] feetAndInches = new int[2];
+		while (true) {
+			try {
+				String stringHeight = promptString(message);
+				String[] heightSplit = stringHeight.replace("\"", "").split("'");
+				feetAndInches[0] = Integer.parseInt(heightSplit[0]);
+				feetAndInches[1] = Integer.parseInt(heightSplit[1]);
+				
+				return feetAndInches;
+			} catch (Exception e) {
+				System.out.println("Error: height could not be parsed. Please enter a height using this format: 5'10\".");
+			}
+		}
+
+	}
+    //helper functions since my user input format is so consistent
+    public static String promptString(String message) {
+    	System.out.format("%s \n>>", message);
+    	return userinput.nextLine();
+    }
+    public static int promptInt(String message, boolean negativePermitted, boolean zeroPermitted) {
+    	int input = 0;
+    	
+    	String errorMsg = "Error: That is not an integer. Please enter a valid number with no decimal component.";
+    	String negativeErrorMsg = "Error: This value cannot be less than 0. Please enter a valid positive number.";
+    	String zeroErrorMsg = "Error: This value cannot be 0. Please enter a valid nonzero number.";
+    	
+    	while (true) {
+    		try {
+		    	System.out.format("%s \n>>", message);
+		    	input = userinput.nextInt();
+		    	userinput.nextLine();
+		    	
+		    	//check for negatives
+		    	if (!negativePermitted && input < 0) {
+			    	System.out.println(negativeErrorMsg);
+			    	System.out.println("");
+			    	continue;
+		    	}
+		    	
+		    	//check for zero
+		    	if (!zeroPermitted && input == 0) {
+			    	System.out.println(zeroErrorMsg);
+			    	System.out.println("");
+			    	continue;
+		    	}
+		    	
+		    	return input;
+    		} catch (Exception e) { 
+		    	userinput.nextLine();
+		    	
+		    	System.out.println(errorMsg);
+		    	System.out.println("");
+		    	continue;
+    		}
+    	}
+
+    }
+    public static double promptDouble(String message, boolean negativePermitted, boolean zeroPermitted) {
+    	double input = 0;
+    	
+    	String errorMsg = "Error: That is not a number. Please enter a valid number with or without decimal component.";
+    	String negativeErrorMsg = "Error: This value cannot be less than 0. Please enter a valid positive number.";
+    	String zeroErrorMsg = "Error: This value cannot be 0. Please enter a valid nonzero number.";
+    	
+    	while (true) {
+    		try {
+		    	System.out.format("%s \n>>", message);
+		    	input = userinput.nextInt();
+		    	userinput.nextLine();
+		    	
+		    	//check for negatives
+		    	if (!negativePermitted && input < 0) {
+			    	System.out.println(negativeErrorMsg);
+			    	System.out.println("");
+			    	continue;
+		    	}
+		    	
+		    	//check for zero
+		    	if (!zeroPermitted && input == 0) {
+			    	System.out.println(zeroErrorMsg);
+			    	System.out.println("");
+			    	continue;
+		    	}
+		    	
+		    	return input;
+    		} catch (Exception e) { 
+		    	userinput.nextLine();
+		    	
+		    	System.out.println(errorMsg);
+		    	System.out.println("");
+		    	continue;
+    		}
+    	}
+
+    }
+}

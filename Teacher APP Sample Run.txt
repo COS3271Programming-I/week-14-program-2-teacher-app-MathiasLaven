@@ -1,0 +1,87 @@
+You will be able to create several persons and then see information about them.
+
+Do you want your person to be a student, teacher, or neither? 
+Type [S] for student, [T] for teacher, or anything else for neither. 
+>>T
+You will create a teacher.
+
+What is your person's first name? 
+>>Anna
+What is your person's last name? 
+>>Washington
+What is your person's gender? 
+>>Female
+What is your person's age? 
+>>36
+What is your person's weight (in pounds)? 
+>>193
+What is your person's height (in feet/inches, formatted as X'Y")? 
+>>5'8"
+What is your person's ethnic group? 
+>>European
+What is your person's religious affiliation? 
+>>Atheist
+What is your teacher's subject of specialty? 
+>>History
+
+First name: Anna
+Last name: Washington
+Gender: Female
+Age: 36
+Weight: 193.00
+Height: 5'8"
+Ethnic group: European
+Religion: Atheist
+Subject: History
+
+Do you want to create another person? [Y/N] 
+>>Y
+Do you want your person to be a student, teacher, or neither? 
+Type [S] for student, [T] for teacher, or anything else for neither. 
+>>S
+You will create a student.
+
+What is your person's first name? 
+>>John
+What is your person's last name? 
+>>Smith
+What is your person's gender? 
+>>Male
+What is your person's age? 
+>>20
+What is your person's weight (in pounds)? 
+>>167
+What is your person's height (in feet/inches, formatted as X'Y")? 
+>>5'11"
+What is your person's ethnic group? 
+>>Hispanic
+What is your person's religious affiliation? 
+>>Christian
+What is your person's college major? 
+>>Business
+What is your person's class rank? 
+>>Sophmore
+What is your person's student email? 
+>>jgsmith@somecollege.edu
+
+First name: John
+Last name: Smith
+Gender: Male
+Age: 20
+Weight: 167.00
+Height: 5'11"
+Ethnic group: Hispanic
+Religion: Christian
+Major: Business
+Class rank: Sophmore
+Email: jgsmith@somecollege.edu
+
+Do you want to create another person? [Y/N] 
+>>N
+
+-----
+
+Here is information about all of your created persons:
+
+Person 1: Anna Washington, age 36 (teacher)
+Person 2: John Smith, age 20 (student)
